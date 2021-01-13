@@ -22,7 +22,8 @@ class SaveController extends Controller
             'target_date' => 'required',
             'target_total' => 'required',
             'current_save' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +41,10 @@ class SaveController extends Controller
         $save->target_total = $input['target_total'];
         $save->current_save = $input['current_save'];
         $save->description = $input['description'];
-        $save->image = $input['image'];
+        $file = $request->file('image');
+        $path = resource_path() . '/images/';
+        $file->move($path, $file->getClientOriginalName());
+        $save->image = $path.$file->getClientOriginalName();
         $save->user_id = $user->id;
         $save->save();
 
@@ -78,7 +82,7 @@ class SaveController extends Controller
             'target_total' => 'required',
             'current_save' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -98,7 +102,11 @@ class SaveController extends Controller
             $save->target_total = $input['target_total'];
             $save->current_save = $input['current_save'];
             $save->description = $input['description'];
-            $save->image = $input['image'];
+            $file = $request->file('image');
+            $path = resource_path() . '/images/';
+            $file->move($path, $file->getClientOriginalName());
+            $save->image = $path.$file->getClientOriginalName();
+            $save->user_id = $user->id;
             $save->save();
             return response([
                 'success' => true,
