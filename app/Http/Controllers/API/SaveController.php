@@ -42,9 +42,9 @@ class SaveController extends Controller
         $save->current_save = $input['current_save'];
         $save->description = $input['description'];
         $file = $request->file('image');
-        $path = resource_path() . '/images/';
+        $path = public_path() . '/images/';
         $file->move($path, $file->getClientOriginalName());
-        $save->image = $path.$file->getClientOriginalName();
+        $save->image = '/images/'.$file->getClientOriginalName();
         $save->user_id = $user->id;
         $save->save();
 
