@@ -72,6 +72,7 @@ class SaveController extends Controller
 
     public function update(Request $request)
     {
+        $user = Auth::user();
         $save = Save::firstWhere('id', $request->id);
         $input = $request->all();
 
@@ -103,9 +104,9 @@ class SaveController extends Controller
             $save->current_save = $input['current_save'];
             $save->description = $input['description'];
             $file = $request->file('image');
-            $path = resource_path() . '/images/';
+            $path = public_path() . '/images/';
             $file->move($path, $file->getClientOriginalName());
-            $save->image = $path.$file->getClientOriginalName();
+            $save->image = '/images/'.$file->getClientOriginalName();
             $save->user_id = $user->id;
             $save->save();
             return response([
@@ -124,6 +125,36 @@ class SaveController extends Controller
             return response([
                 'success' => true,
                 'message' => 'Save deleted successfully.',
+            ], 200);
+        }
+    }
+
+    public function save(Request $request)
+    {
+        $user = Auth::user();
+        $save = Save::firstWhere('id', $request->id);
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'current_save' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            // return response
+            $response = [
+                'success' => false,
+                'message' => 'Validation Error.', $validator->errors(),
+            ];
+            return response()->json($response, 404);
+        }
+
+        if($save){
+            $save = Save::find($request->id);
+            $save->current_save = $input['current_save'];
+            $save->save();
+            return response([
+                'success' => true,
+            'message' => 'Save updated successfully.',
             ], 200);
         }
     }

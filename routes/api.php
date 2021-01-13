@@ -26,4 +26,5 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/read', 'App\Http\Controllers\API\SaveController@read')->middleware('auth:api');
     Route::post('/update', 'App\Http\Controllers\API\SaveController@update')->middleware('auth:api');
     Route::post('/delete', 'App\Http\Controllers\API\SaveController@delete')->middleware('auth:api');
+    Route::post('/save', 'App\Http\Controllers\API\SaveController@save')->middleware('auth:api');
 });
