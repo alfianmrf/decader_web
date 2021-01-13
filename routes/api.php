@@ -22,4 +22,8 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('/login', 'App\Http\Controllers\API\UserController@login');
     Route::post('/register', 'App\Http\Controllers\API\UserController@register');
     Route::get('/logout', 'App\Http\Controllers\API\UserController@logout')->middleware('auth:api');
+    Route::post('/create', 'App\Http\Controllers\API\SaveController@create')->middleware('auth:api');
+    Route::get('/read', 'App\Http\Controllers\API\SaveController@read')->middleware('auth:api');
+    Route::post('/update', 'App\Http\Controllers\API\SaveController@update')->middleware('auth:api');
+    Route::post('/delete', 'App\Http\Controllers\API\SaveController@delete')->middleware('auth:api');
 });
