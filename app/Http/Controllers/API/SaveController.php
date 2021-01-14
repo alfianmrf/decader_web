@@ -23,7 +23,7 @@ class SaveController extends Controller
             'target_total' => 'required',
             'current_save' => 'required',
             'description' => 'required',
-            'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
+            // 'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -41,10 +41,15 @@ class SaveController extends Controller
         $save->target_total = $input['target_total'];
         $save->current_save = $input['current_save'];
         $save->description = $input['description'];
-        $file = $request->file('image');
-        $path = public_path() . '/images/';
-        $file->move($path, $file->getClientOriginalName());
-        $save->image = '/images/'.$file->getClientOriginalName();
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $path = public_path() . '/images/';
+            $file->move($path, $file->getClientOriginalName());
+            $save->image = '/images/'.$file->getClientOriginalName();
+        }
+        else{
+            $save->image = '';
+        }
         $save->user_id = $user->id;
         $save->save();
 
@@ -83,7 +88,7 @@ class SaveController extends Controller
             'target_total' => 'required',
             'current_save' => 'required',
             'description' => 'required',
-            'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
+            // 'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -103,10 +108,15 @@ class SaveController extends Controller
             $save->target_total = $input['target_total'];
             $save->current_save = $input['current_save'];
             $save->description = $input['description'];
-            $file = $request->file('image');
-            $path = public_path() . '/images/';
-            $file->move($path, $file->getClientOriginalName());
-            $save->image = '/images/'.$file->getClientOriginalName();
+            if($request->hasFile('image')){
+                $file = $request->file('image');
+                $path = public_path() . '/images/';
+                $file->move($path, $file->getClientOriginalName());
+                $save->image = '/images/'.$file->getClientOriginalName();
+            }
+            else{
+                $save->image = '';
+            }
             $save->user_id = $user->id;
             $save->save();
             return response([
