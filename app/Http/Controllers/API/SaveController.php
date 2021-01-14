@@ -86,7 +86,7 @@ class SaveController extends Controller
             'plan' => 'required',
             'target_date' => 'required',
             'target_total' => 'required',
-            'current_save' => 'required',
+            //'current_save' => 'required',
             'description' => 'required',
             // 'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -106,7 +106,7 @@ class SaveController extends Controller
             $save->plan = $input['plan'];
             $save->target_date = $input['target_date'];
             $save->target_total = $input['target_total'];
-            $save->current_save = $input['current_save'];
+            //$save->current_save = $input['current_save'];
             $save->description = $input['description'];
             if($request->hasFile('image')){
                 $file = $request->file('image');
