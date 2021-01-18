@@ -114,9 +114,6 @@ class SaveController extends Controller
                 $file->move($path, $file->getClientOriginalName());
                 $save->image = '/images/'.$file->getClientOriginalName();
             }
-            else{
-                $save->image = '';
-            }
             $save->user_id = $user->id;
             $save->save();
             return response([
